@@ -23,21 +23,21 @@ from nltk.corpus import stopwords
 from nltk import PorterStemmer, WordNetLemmatizer
     
     
-stem=PorterStemmer()
-corpus=[]
-    
-for i in range(len(data)):
-    words=re.sub('[^a-zA-Z]', ' ', data['Message'][i])
-    words=words.lower()
-    words=words.split()
-    words=[stem.stem(word) for word in words if word not in set(stopwords.words('english'))]
-    words=' '.join(words)
-    corpus.append(words)
+#stem=PorterStemmer()
+#corpus=[]
+#    
+#for i in range(len(data)):
+#    words=re.sub('[^a-zA-Z]', ' ', data['Message'][i])
+#    words=words.lower()
+#    words=words.split()
+#    words=[stem.stem(word) for word in words if word not in set(stopwords.words('english'))]
+#    words=' '.join(words)
+#    corpus.append(words)
     
     #creating BagOfWords
 from sklearn.feature_extraction.text import CountVectorizer
 cv=CountVectorizer()
-x=cv.fit_transform(corpus).toarray()
+x=cv.fit_transform(X)
     
 pickle.dump(cv,open('transform.pkl','wb'))
 
