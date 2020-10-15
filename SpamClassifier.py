@@ -44,7 +44,7 @@ pickle.dump(cv,open('transform.pkl','wb'))
     #Model
     
 from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test=train_test_split(x,y, test_size=.33, random_state=18)
+X_train,X_test,y_train,y_test=train_test_split(x,y, test_size=.33, random_state=42)
     
     
 from sklearn.naive_bayes import BernoulliNB
