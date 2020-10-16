@@ -47,12 +47,12 @@ from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test=train_test_split(x,y, test_size=.33, random_state=42)
     
     
-from sklearn.naive_bayes import BernoulliNB
-bnb=BernoulliNB().fit(X_train,y_train)
-bnb_prediction=bnb.predict(X_test)
+from sklearn.naive_bayes import BernoulliNB, MultinomialNB
+mnb=MultinomialNB().fit(X_train,y_train)
+mnb_prediction=mnb.predict(X_test)
     
 from sklearn.metrics import confusion_matrix, accuracy_score
-bnb_confution=confusion_matrix(y_test,bnb_prediction)
-bnb_accuracy=accuracy_score(y_test,bnb_prediction)
+mnb_confution=confusion_matrix(y_test,mnb_prediction)
+mnb_accuracy=accuracy_score(y_test,mnb_prediction)
 filename = 'nlp_model.pkl'
-pickle.dump(bnb, open(filename,'wb'))
+pickle.dump(mnb, open(filename,'wb'))

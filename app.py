@@ -12,7 +12,7 @@ import pickle
 
 #Load file from disk
 filename='nlp_model.pkl'
-bnb=pickle.load(open(filename,'rb'))
+mnb=pickle.load(open(filename,'rb'))
 cv=pickle.load(open('transform.pkl','rb'))
 app=Flask(__name__)
 
@@ -73,7 +73,7 @@ def predict():
         message=request.form['message']
         data=[message]
         vect=cv.transform(data).toarray()
-        my_prediction= bnb.predict(vect)
+        my_prediction= mnb.predict(vect)
         
     return render_template('result.html', prediction = my_prediction)
 
