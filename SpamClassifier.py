@@ -9,6 +9,9 @@ import nltk
 import pandas as pd
 import numpy as np
 import pickle
+import re
+from nltk.corpus import stopwords
+from nltk import PorterStemmer, WordNetLemmatizer
 
 data=pd.read_csv('spam.csv', sep=',', encoding='latin-1')
 data.drop(['Unnamed: 2','Unnamed: 3','Unnamed: 4'], axis=1, inplace=True)
@@ -17,31 +20,26 @@ data['Type']=data['Type'].map({'ham':0,'spam':1})
 X=data['Message']
 y=data['Type']
 
-import re
-import nltk
-from nltk.corpus import stopwords
-from nltk import PorterStemmer, WordNetLemmatizer
     
+stem=PorterStemmer()
+corpus=[]
     
-#stem=PorterStemmer()
-#corpus=[]
-#    
-#for i in range(len(data)):
-#    words=re.sub('[^a-zA-Z]', ' ', data['Message'][i])
-#    words=words.lower()
-#    words=words.split()
-#    words=[stem.stem(word) for word in words if word not in set(stopwords.words('english'))]
-#    words=' '.join(words)
-#    corpus.append(words)
+for i in range(len(data)):
+    words=re.sub('[^a-zA-Z]', ' ', data['Message'][i])
+    words=words.lower()
+    words=words.split()
+    words=[stem.stem(word) for word in words if word not in set(stopwords.words('english'))]
+    words=' '.join(words)
+    corpus.append(words)
     
-    #creating BagOfWords
+#creating BagOfWords
 from sklearn.feature_extraction.text import CountVectorizer
 cv=CountVectorizer()
-x=cv.fit_transform(X)
+x=cv.fit_transform(corpus)
     
 pickle.dump(cv,open('transform.pkl','wb'))
 
-    #Model
+#Model
     
 from sklearn.model_selection import train_test_split
 X_train,X_test,y_train,y_test=train_test_split(x,y, test_size=.33, random_state=42)
